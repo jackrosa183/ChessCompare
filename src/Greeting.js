@@ -1,4 +1,4 @@
-function Greeting(props) {
+export default function Greeting(props) {
   return (
     <div className="header">
       <h1>Welcome to Chess Compare!</h1>
@@ -8,5 +8,3 @@ function Greeting(props) {
     </div>
   )
 }
-
-export default Greeting;

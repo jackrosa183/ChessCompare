@@ -11,7 +11,13 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+.stat-table {
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  text-align: center;
+}
 
 .form-input {
   padding: 5px;

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Greeting from './Greeting';
 import CompareForm from './CompareForm';

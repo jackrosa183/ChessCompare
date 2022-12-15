@@ -11,7 +11,7 @@ export default function CompareForm() {
   })
   const [user1Stats, setUser1Stats] = useState(null);
   const [user2Stats, setUser2Stats] = useState(null)
-
+  const [playerFound, setPlayerFound] = useState();
   const handleChange = (e) => {
     setInputs({...inputs, [e.target.name]: e.target.value})
   }
@@ -27,9 +27,14 @@ export default function CompareForm() {
       ])
       .catch((error) => { 
         console.log(error + "😫");
+        setPlayerFound(false);
+        console.log(playerFound, "😅");
         setUser1Stats();
         setUser2Stats();
       });
+
+      setPlayerFound(true);
+      console.log(playerFound, "😅");
       setUser1Stats(stats1.data);
       setUser2Stats(stats2.data);
     }
@@ -40,7 +45,7 @@ export default function CompareForm() {
 
   return (
     <div>
-      <h1>Compare two Lichess Users</h1>
+      <h1>Compare Lichess Users</h1>
       <form onSubmit={e => {handleSubmit(e)}}>
         <div className="form-input">
           <input name="user1" onChange={handleChange} placeholder="Username 1" />
@@ -48,10 +53,13 @@ export default function CompareForm() {
         <div className="form-input">
           <input name="user2" onChange={handleChange} placeholder="Username 2"/>
         </div>
-        <div>
-          <button type="submit" value="Submit">Compare</button> 
+        <div className='button-container'>
+          <button className="button" type="submit" value="Submit">Compare</button> 
         </div>
       </form>
+      {playerFound == false && 
+        <p>One or both players could not be found</p>
+      }
       {user1Stats && user2Stats &&
         <Stats user1Stats={user1Stats} user2Stats={user2Stats} />
       }

@@ -18,12 +18,22 @@
   align-items: center;
   text-align: center;
 }
-
+.stat-table .total {
+  font-weight: bold;
+}
+.container {
+  padding-top: 25px;
+  display: inline-block;
+  text-align: center;
+}
 .form-input {
   padding: 5px;
 }
 .button {
   padding: 10px;
+}
+.experience {
+  display: flex;
 }
 
 .App-header {
@@ -48,4 +58,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 10px;
 }

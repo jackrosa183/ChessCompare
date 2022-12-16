@@ -23,14 +23,19 @@ const Stats = ({user1Stats, user2Stats}) => {
               <td>{user2Stats.perfs?.classical?.rating || "???"}</td>
             </tr>
             <tr>
+              <td>Rapid Rating</td>
+              <td>{user1Stats.perfs?.rapid?.rating || "???"}</td>
+              <td>{user2Stats.perfs?.rapid?.rating || "???"}</td>
+            </tr>
+            <tr>
               <td>Blitz Rating</td>
               <td>{user1Stats.perfs?.blitz?.rating || "???"}</td>
               <td>{user2Stats.perfs?.blitz?.rating || "???"}</td>
             </tr>
             <tr>
-              <td>Rapid Rating</td>
-              <td>{user1Stats.perfs?.rapid?.rating || "???"}</td>
-              <td>{user2Stats.perfs?.rapid?.rating || "???"}</td>
+              <td>Bullet Rating</td>
+              <td>{user1Stats.perfs?.bullet?.rating || "???"}</td>
+              <td>{user2Stats.perfs?.bullet?.rating || "???"}</td>
             </tr>
             <tr>
               <td>Puzzle Rating</td>

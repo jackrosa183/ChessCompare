@@ -1,7 +1,13 @@
+html {
+  background-color: #282c34;
+}
+a {
+  color: #dddbda;
+}
 .App {
+  color: #dddbda;
   text-align: center;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -100,4 +106,25 @@
 table {
   border-collapse: separate;
   border-spacing: 10px;
+}
+
+input {
+  display: inline-block;
+  padding: 0 16px 0 12px;
+  width: 25%;
+  line-height: 30px;
+  height: 32px;
+  border: 1px solid #dddbda;
+  border-radius: 4px;
+  background-color: #fff;
+  color: rgb(8, 7, 7);
+  transition: border .1s linear,background-color .1s linear;
+}
+input:focus {
+  border-color: #1b96ff;
+  color: black;
+  box-shadow: rgb(1, 118, 211) 0px 0px 3px 0px;
+}
+.header {
+  background-color: #282c34;
 }

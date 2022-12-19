@@ -18,7 +18,6 @@ export default function CompareForm() {
     const user = name.split('.')[0];
     const field = name.split('.')[1];
     setInputs({...inputs, [user]: {...inputs[user], [field]: value}});
-    console.log({inputs})
   }
 
   const handleSubmit =  async (e) => {
@@ -31,15 +30,12 @@ export default function CompareForm() {
         axios.get(chessUrl + inputs.user2.name),
       ])
       .catch((error) => { 
-        console.log(error + "😫");
         setPlayerFound(false);
-        console.log(playerFound, "😅");
         setUser1Stats();
         setUser2Stats();
       });
 
       setPlayerFound(true);
-      console.log(playerFound, "😅");
       setUser1Stats(stats1.data);
       setUser2Stats(stats2.data);
     }

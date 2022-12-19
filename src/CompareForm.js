@@ -12,7 +12,7 @@ export default function CompareForm() {
   const [user1Stats, setUser1Stats] = useState(null);
   const [user2Stats, setUser2Stats] = useState(null)
   const [playerFound, setPlayerFound] = useState();
-
+  console.log(user1Stats, user2Stats);
   const handleChange = (e) => {
     const {name, value} = e.target;
     const user = name.split('.')[0];
@@ -20,28 +20,36 @@ export default function CompareForm() {
     setInputs({...inputs, [user]: {...inputs[user], [field]: value}});
   }
 
-  const handleSubmit =  async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (inputs.user1.name && inputs.user2.name){
-      const chessUrl = "https://lichess.org/api/user/";
 
-      const [stats1, stats2] = await Promise.all([
-        axios.get(chessUrl + inputs.user1.name),
-        axios.get(chessUrl + inputs.user2.name),
-      ])
-      .catch((error) => { 
-        setPlayerFound(false);
-        setUser1Stats();
-        setUser2Stats();
-      });
+    if (!inputs.user1.name || !inputs.user2.name) {
+      return;
+    }
+    const lichessUrl = "https://lichess.org/api/user/";
+    const chessUrl = "https://api.chess.com/pub/player/";
+    const stats = [];
 
-      setPlayerFound(true);
-      setUser1Stats(stats1.data);
-      setUser2Stats(stats2.data);
+    try {
+      const user1Response =
+        inputs.user1.service === "Lichess"
+          ? await axios.get(lichessUrl + inputs.user1.name)
+          : await axios.get(chessUrl + inputs.user1.name + "/stats");
+      stats.push({service: inputs.user1.service, data: user1Response.data});
+  
+      const user2Response =
+        inputs.user2.service === "Lichess"
+          ? await axios.get(lichessUrl + inputs.user2.name)
+          : await axios.get(chessUrl + inputs.user2.name + "/stats");
+      stats.push({service: inputs.user2.service, data: user2Response.data});
+    } catch (error) {
+      alert("One or both players could not be found");
+      return;
     }
-    else {
-      return
-    }
+  
+    setPlayerFound(true);
+    setUser1Stats(stats[0]);
+    setUser2Stats(stats[1]);
   };
 
   return (
@@ -73,11 +81,6 @@ export default function CompareForm() {
       {playerFound === false && 
         <p>One or both players could not be found</p>
       }
-      {user1Stats && user2Stats &&
-        <Stats user1Stats={user1Stats} user2Stats={user2Stats} />
-      }
-      
     </div>
-
   )
 }

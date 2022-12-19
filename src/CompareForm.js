@@ -11,8 +11,6 @@ export default function CompareForm() {
   })
   const [user1Stats, setUser1Stats] = useState(null);
   const [user2Stats, setUser2Stats] = useState(null)
-  const [playerFound, setPlayerFound] = useState();
-  console.log(user1Stats, user2Stats);
   const handleChange = (e) => {
     const {name, value} = e.target;
     const user = name.split('.')[0];
@@ -47,7 +45,6 @@ export default function CompareForm() {
       return;
     }
   
-    setPlayerFound(true);
     setUser1Stats(stats[0]);
     setUser2Stats(stats[1]);
   };
@@ -78,8 +75,9 @@ export default function CompareForm() {
           <button className="button" type="submit" value="Submit">Compare</button> 
         </div>
       </form>
-      {playerFound === false && 
-        <p>One or both players could not be found</p>
+      {user1Stats && user2Stats &&
+        <Stats user1={inputs.user1} user2={inputs.user2} 
+        user1Stats={user1Stats} user2Stats={user2Stats}/>
       }
     </div>
   )

@@ -6,24 +6,29 @@ import Stats from './Stats.js';
 export default function CompareForm() {
   // Declare a new state variable, which we'll call "count"
   const [inputs , setInputs] = useState({
-    user1: '',
-    user2: '',
+    user1: {name: '', service: 'Lichess'},
+    user2: {name: '', service: 'Lichess'},
   })
   const [user1Stats, setUser1Stats] = useState(null);
   const [user2Stats, setUser2Stats] = useState(null)
   const [playerFound, setPlayerFound] = useState();
+
   const handleChange = (e) => {
-    setInputs({...inputs, [e.target.name]: e.target.value})
+    const {name, value} = e.target;
+    const user = name.split('.')[0];
+    const field = name.split('.')[1];
+    setInputs({...inputs, [user]: {...inputs[user], [field]: value}});
+    console.log({inputs})
   }
 
   const handleSubmit =  async (e) => {
     e.preventDefault();
-    if (inputs.user1 && inputs.user2){
+    if (inputs.user1.name && inputs.user2.name){
       const chessUrl = "https://lichess.org/api/user/";
 
       const [stats1, stats2] = await Promise.all([
-        axios.get(chessUrl + inputs.user1),
-        axios.get(chessUrl + inputs.user2),
+        axios.get(chessUrl + inputs.user1.name),
+        axios.get(chessUrl + inputs.user2.name),
       ])
       .catch((error) => { 
         console.log(error + "😫");
@@ -45,19 +50,31 @@ export default function CompareForm() {
 
   return (
     <div>
-      <h1>Compare Lichess Users</h1>
+      <h1>Compare Chess Players</h1>
       <form onSubmit={e => {handleSubmit(e)}}>
         <div className="form-input">
-          <input name="user1" onChange={handleChange} placeholder="Username 1" />
+          <input name="user1.name" onChange={handleChange} placeholder="Username 1" />
+        </div>
+        <div>
+          <select name="user1.service" onChange={handleChange}>
+            <option value="Lichess">Lichess</option>
+            <option value="Chess.com">Chess.com</option>
+          </select>
         </div>
         <div className="form-input">
-          <input name="user2" onChange={handleChange} placeholder="Username 2"/>
+          <input name="user2.name" onChange={handleChange} placeholder="Username 2"/>
+        </div>
+        <div>
+          <select name="user2.service" onChange={handleChange}>
+            <option value="Lichess">Lichess</option>
+            <option value="Chess.com">Chess.com</option>
+          </select>
         </div>
         <div className='button-container'>
           <button className="button" type="submit" value="Submit">Compare</button> 
         </div>
       </form>
-      {playerFound == false && 
+      {playerFound === false && 
         <p>One or both players could not be found</p>
       }
       {user1Stats && user2Stats &&

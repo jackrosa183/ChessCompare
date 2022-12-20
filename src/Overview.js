@@ -1,19 +1,24 @@
-const Overview = ({user1Stats, user2Stats}) => {
-  const user1name = user1Stats.id;
-  const user2name = user2Stats.id;
+import { playerTotals } from "./playerTotals";
+
+const Overview = ({user1, user2, user1Stats, user2Stats}) => {
+  const user1Name = user1.name;
+  const user2Name = user2.name;
+
+  const user1Total = playerTotals(user1Stats);
+  const user2Total = playerTotals(user2Stats);
 
   const findExperiencedPlayer = (user1Total, user2Total) => {
-    const moreExperienced = Math.max(user1Total, user2Total)
-    if (moreExperienced === user1Total) {
-      return [user1Stats,user2Stats]
-    } else {
-      return [user2Stats,user1Stats]
-    }
-  }
-  const moreExperienced = findExperiencedPlayer(user1Stats.count?.all, user2Stats.count?.all);
+    const moreExperienced = Math.max(user1Total, user2Total);
+    return moreExperienced === user1Total
+    ? [{name: user1Name, total: user1Total}, {name: user2Name, total: user2Total}]
+    : [{name: user2Name, total: user2Total}, {name: user1Name, total: user1Total}];
+  };
+  const moreExperienced = findExperiencedPlayer(user1Total, user2Total);
+  
   const gameDifferential = () => {
-    return ((moreExperienced[0].count?.all - moreExperienced[1].count?.all) || "???");
+    return ((moreExperienced[0].total - moreExperienced[1].total) || "???");
   }
+
   const bestRatingCats = (user1Stats, user2Stats) => {
     let user1HighestCat;
     let user2HighestCat;
@@ -34,7 +39,6 @@ const Overview = ({user1Stats, user2Stats}) => {
         }
       }
     } catch {
-      console.log("🥳");
       return {user1: {cat: "???", rating: "???"},
       user2: {cat: "???", rating: "???"}};
     }
@@ -44,12 +48,12 @@ const Overview = ({user1Stats, user2Stats}) => {
   let bestCats = (bestRatingCats(user1Stats, user2Stats));
   return (
     <div>
-      <p>{moreExperienced[0].id} is the more experienced player.</p>
-      <p>{moreExperienced[0].id} has played <strong>{gameDifferential()}</strong> more games than {moreExperienced[1].id}.</p>
-      <p>{user1name}'s best category is {bestCats.user1.cat} where their rating is <strong>{bestCats.user1.rating}.</strong> 
+      <p>{moreExperienced[0].name} is the more experienced player.</p>
+      <p>{moreExperienced[0].name} has played <strong>{gameDifferential()}</strong> more games than {moreExperienced[1].name}.</p>
+      {/* <p>{user1Name}'s best category is {bestCats.user1.cat} where their rating is <strong>{bestCats.user1.rating}.</strong> 
       </p>
-      <p>{user2name}'s best category is {bestCats.user2.cat} where their rating is <strong>{bestCats.user2.rating}.</strong> 
-      </p>
+      <p>{user2Name}'s best category is {bestCats.user2.cat} where their rating is <strong>{bestCats.user2.rating}.</strong> 
+      </p> */}
 
     </div>
   );

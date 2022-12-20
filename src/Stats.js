@@ -1,4 +1,5 @@
 import Overview from './Overview'
+import { playerTotals } from './playerTotals';
 
 const Stats = ({user1, user2, user1Stats, user2Stats}) => {
 
@@ -11,6 +12,7 @@ const Stats = ({user1, user2, user1Stats, user2Stats}) => {
     <div className="container">
       <h2>♖Overview♖</h2>
         <p><strong>Comparing {user1.name} and {user2.name}</strong></p>
+        <Overview user1={user1} user1Stats={user1Stats} user2={user2} user2Stats={user2Stats}/>
       <div className='stat-table'>
         <h2>♘Breakdown♘</h2>
       </div>
@@ -50,8 +52,8 @@ const Stats = ({user1, user2, user1Stats, user2Stats}) => {
             </tr>
             <tr className="total">
               <td>Total Games played</td>
-              <td>{user1Data.count?.all || chessSum(user1Data.record) || "???"}</td>
-              <td>{user2Data.count?.all || chessSum(user2Data.record) || "???"}</td>
+              <td>{playerTotals(user1Stats) || "???"}</td>
+              <td>{playerTotals(user2Stats) || "???"}</td>
             </tr>
           </tbody>
         </table>

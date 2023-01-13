@@ -10,12 +10,14 @@ export default function CompareForm() {
     user2: {name: '', service: 'Lichess'},
   })
   const [user1Stats, setUser1Stats] = useState(null);
-  const [user2Stats, setUser2Stats] = useState(null)
+  const [user2Stats, setUser2Stats] = useState(null);
+  const [showStats, setShowStats] = useState(false)
   const handleChange = (e) => {
     const {name, value} = e.target;
     const user = name.split('.')[0];
     const field = name.split('.')[1];
     setInputs({...inputs, [user]: {...inputs[user], [field]: value}});
+    setShowStats(false);
   }
 
   const handleSubmit = async (e) => {
@@ -44,9 +46,10 @@ export default function CompareForm() {
       alert("One or both players could not be found");
       return;
     }
-  
+    
     setUser1Stats(stats[0]);
     setUser2Stats(stats[1]);
+    setShowStats(true);
   };
 
   return (
@@ -75,7 +78,7 @@ export default function CompareForm() {
           <button className="button" type="submit" value="Submit">Compare</button> 
         </div>
       </form>
-      {user1Stats && user2Stats &&
+      { showStats &&
         <Stats user1={inputs.user1} user2={inputs.user2} 
         user1Stats={user1Stats} user2Stats={user2Stats}/>
       }

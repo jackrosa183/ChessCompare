@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+This is an app for comparing chess ratings between lichess and chess.com users.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+View the hosted site at [Chess Compare](https://chesscompare.onrender.com/).
 
 ## Available Scripts
 
